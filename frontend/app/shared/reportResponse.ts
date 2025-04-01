@@ -25,7 +25,7 @@ export const responseSchema = z.object({
 });
 
 export const responseSchemaWithSearchItems = responseSchema.extend({
-  searchResults: searchResultItemSchema,
+  searchResults: z.array(searchResultItemSchema),
 });
 
 export type ResponseScheamWithSearchItems = z.infer<

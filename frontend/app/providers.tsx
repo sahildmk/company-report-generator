@@ -1,6 +1,7 @@
 // In Next.js, this file would be called: app/providers.tsx
 "use client";
 
+import { Toaster } from "@/components/ui/sonner";
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import {
   isServer,
@@ -44,6 +45,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <Toaster />
+      {children}
+    </QueryClientProvider>
   );
 }

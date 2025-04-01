@@ -8,6 +8,8 @@ import {
   ResponseScheamWithSearchItems,
   responseSchemaWithSearchItems,
 } from "../shared/reportResponse";
+import { toast } from "sonner";
+import { LoaderCircle } from "lucide-react";
 
 export function Report() {
   const [url, setUrl] = useState("");
@@ -24,6 +26,15 @@ export function Report() {
 
       return res.json();
     },
+    onSuccess(data) {
+      console.log(data);
+      const parsedDataResult = responseSchemaWithSearchItems.safeParse(data);
+      if (parsedDataResult.success) {
+        setReportData(parsedDataResult.data);
+      } else {
+        console.error(parsedDataResult.error);
+      }
+    },
   });
 
   return (
@@ -34,19 +45,15 @@ export function Report() {
       />
       <Button
         onClick={() => {
-          mutate(undefined, {
-            onSuccess(data) {
-              console.log(data);
-              setReportData(responseSchemaWithSearchItems.parse(data));
-            },
+          toast(<div>Generating Report</div>, {
+            icon: <LoaderCircle className="size-4 animate-spin" />,
           });
+          mutate();
         }}
       >
         Generate Report
       </Button>
-      {isPending ? (
-        "Loading..."
-      ) : (
+      {isPending ? null : (
         <div>
           {reportData?.companyName}
           <br />
