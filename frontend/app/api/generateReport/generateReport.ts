@@ -1,47 +1,19 @@
 import puppeteer from "puppeteer";
-import "dotenv/config";
-import { config } from "dotenv";
-import { z } from "zod";
 import * as cheerio from "cheerio";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
-import customSearchSchema from "./customSearchResultSchema.js";
+import customSearchSchema from "../../shared/customSearchResultSchema";
+import { responseSchema } from "@/app/shared/reportResponse";
 
-const SUBJECT_URL = "https://mongodb.com/";
 const SERVICE_URL = "https://www.googleapis.com/";
 
-const responseSchema = z.object({
-  companyName: z.string(),
-  summary: z.string(),
-  socials: z.array(
-    z.object({
-      name: z.string(),
-      link: z.string(),
-    })
-  ),
-  corePillars: z.array(
-    z.object({
-      name: z.string(),
-      outline: z.string(),
-    })
-  ),
-  news: z.array(
-    z.object({
-      title: z.string(),
-      url: z.string(),
-    })
-  ),
-});
-
-const main = async () => {
-  config();
-
+export const generateReport = async (url: string) => {
   console.log("> launching browser");
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  console.log(`> navigating to ${SUBJECT_URL}`);
-  const result = await page.goto(SUBJECT_URL);
+  console.log(`> navigating to ${url}`);
+  const result = await page.goto(url);
 
   console.log(`> getting url text`);
   const urlText = await result?.text();
@@ -65,12 +37,14 @@ const main = async () => {
 
   console.log(response.object, response.usage.promptTokens);
 
-  const newsSerach = await searchCompanyNews(
-    response.object.companyName,
-    SUBJECT_URL
-  );
+  const newsSerach = await searchCompanyNews(response.object.companyName, url);
 
   console.log(newsSerach);
+
+  return {
+    ...response.object,
+    searchResults: newsSerach,
+  };
 };
 
 const searchCompanyNews = async (companyName: string, url: string) => {
@@ -214,7 +188,3 @@ function cleanWebpage(text: string) {
     return null;
   }
 }
-
-await main();
-
-process.exit();
