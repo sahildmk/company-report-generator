@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core";
+import puppeteer from "puppeteer";
 import * as cheerio from "cheerio";
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
@@ -12,9 +12,8 @@ export const maxDuration = 30;
 
 export const generateReport = async (url: string) => {
   console.log("> launching browser");
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://production-sfo.browserless.io?token=${process.env.BLESS_TOKEN}`,
-  });
+  const browser = await puppeteer.launch();
+
   const page = await browser.newPage();
   await page.setViewport({ width: 1920, height: 1080 });
 
