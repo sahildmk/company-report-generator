@@ -109,7 +109,9 @@ export function Report({ report }: { report: ResponseScheamWithSearchItems }) {
                   >
                     <div className="bg-stone-800 w-30 shrink-0 rounded-sm overflow-hidden">
                       <img
-                        src={result.pagemap?.cse_image?.[0]?.src}
+                        src={
+                          (result.pagemap?.["cse_image"] as any[])?.[0]?.["src"]
+                        }
                         className="ratio object-cover rounded-sm h-full"
                       />
                     </div>
