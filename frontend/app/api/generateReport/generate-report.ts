@@ -11,9 +11,10 @@ const SERVICE_URL = "https://www.googleapis.com/";
 export const generateReport = async (url: string) => {
   console.log("> launching browser");
   const browser = await puppeteer.connect({
-    browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BLESS_TOKEN}`,
+    browserWSEndpoint: `wss://production-sfo.browserless.io?token=${process.env.BLESS_TOKEN}`,
   });
   const page = await browser.newPage();
+  await page.setViewport({ width: 1920, height: 1080 });
 
   console.log(`> navigating to ${url}`);
   const result = await page.goto(url);
