@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { searchResultItemSchema } from "./customSearchResultSchema";
+import { searchResultItemSchema } from "./custom-search-result-schema";
 
 export const responseSchema = z.object({
   companyName: z.string(),
