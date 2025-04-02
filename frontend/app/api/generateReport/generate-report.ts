@@ -8,6 +8,8 @@ import { z } from "zod";
 
 const SERVICE_URL = "https://www.googleapis.com/";
 
+export const maxDuration = 30;
+
 export const generateReport = async (url: string) => {
   console.log("> launching browser");
   const browser = await puppeteer.connect({
