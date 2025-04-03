@@ -28,7 +28,7 @@ export function Report({ report }: { report: ResponseScheamWithSearchItems }) {
   const news = [...relevantNews, ...otherNews];
 
   return (
-    <div className="grid grid-cols-4 w-4xl gap-4">
+    <div className="grid grid-cols-4 w-4xl gap-4 my-4">
       <div className="col-span-4">
         <Card className="">
           <CardHeader>

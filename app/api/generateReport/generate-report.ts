@@ -46,8 +46,6 @@ export const generateReport = async (url: string) => {
       `,
   });
 
-  console.log(summaryResponse.object, summaryResponse.usage.promptTokens);
-
   // console.log(`> identifiy next webpages to search`);
   // const subpagesResponse = await generateObject({
   //   model: google("gemini-2.0-flash-exp"),
@@ -63,12 +61,11 @@ export const generateReport = async (url: string) => {
   //     `,
   // });
 
+  console.log(`> searching for ${summaryResponse.object.companyName} news`);
   const newsSerach = await searchCompanyNews(
     summaryResponse.object.companyName,
     url
   );
-
-  console.log(newsSerach);
 
   return {
     ...summaryResponse.object,
@@ -82,8 +79,6 @@ const pageSchema = z.object({
 });
 
 const searchCompanyNews = async (companyName: string, url: string) => {
-  console.log(`> searching for ${companyName} news`);
-
   const searchUrlWithUrl = getSearchUrl(
     SERVICE_URL,
     `latest ${companyName} news`

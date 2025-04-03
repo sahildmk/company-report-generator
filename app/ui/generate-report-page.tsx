@@ -39,8 +39,8 @@ export function GenerateReportPage() {
   });
 
   return (
-    <div className="w-full p-4 flex items-center flex-col gap-4">
-      <div className="flex flex-col gap-4 border p-4 rounded-xl w-lg">
+    <div className="w-full flex items-center flex-col gap-4 relative min-h-screen overflow-hidden">
+      <div className="flex flex-col gap-4 border p-4 rounded-xl absolute bg-white shadow-2xl bottom-8 z-50 w-md">
         <Input
           placeholder="Enter Company URL"
           onChange={(e) => setUrl(e.target.value)}
@@ -56,11 +56,13 @@ export function GenerateReportPage() {
           Generate Report
         </Button>
       </div>
-      {isPending ? (
-        <Loader2 className="animate-spin" />
-      ) : reportData ? (
-        <Report report={reportData} />
-      ) : null}
+      <div className="max-h-screen overflow-auto w-full flex justify-center">
+        {isPending ? (
+          <Loader2 className="animate-spin" />
+        ) : reportData ? (
+          <Report report={reportData} />
+        ) : null}
+      </div>
     </div>
   );
 }
