@@ -112,16 +112,6 @@ const getSearchUrl = (url: string, query: string) => {
   return searchUrl.toString();
 };
 
-/**
- * Cleans a scraped HTML page by removing unnecessary elements
- * @param {string} text - Path to the scraped HTML file
- * @param {Object} options - Optional configuration
- * @param {boolean} options.removeStyles - Whether to remove style tags and attributes (default: true)
- * @param {boolean} options.removeScripts - Whether to remove script tags (default: true)
- * @param {boolean} options.removeComments - Whether to remove HTML comments (default: true)
- * @param {boolean} options.removeInlineEvents - Whether to remove inline event handlers (default: true)
- * @param {boolean} options.removeNonContentAttributes - Whether to remove attributes not relevant to content (default: true)
- */
 function extractDataFromWebpage(text: string, baseUrl: string) {
   try {
     // Load HTML into cheerio
